@@ -1,7 +1,6 @@
 #!/usr/bin/python3
 import os
 
-
 path = "../Messages"
 os.mkdir(path)
 path = "../Config"
