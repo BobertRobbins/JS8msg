@@ -1,4 +1,4 @@
-JS8msg is a companion program to JS8call and adds EMCOMM form support to JS8call. 
+# JS8msg is a companion program to JS8call and adds EMCOMM form support to JS8call. 
 This program was written in Python 3.8 and is released under the GPL v3 license.
 
 Directory structure:
