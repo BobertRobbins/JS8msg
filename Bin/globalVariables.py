@@ -9,6 +9,7 @@ import os
 import platform
 
 ## Probably need to get system platform information
+pathSep = ""
 sysPlatform = platform.system()
 if sysPlatform == "Linux":
     pathSep = "/"
@@ -55,8 +56,8 @@ readDataFlag = False
 ## some variables for facilitating the reading of messages from JS8call
 ##
 stationCallsign = ""
-messageDict = {"fm":"","mg":"","id":""}
-messageDictKeys = ["fm","mg","id"]
+messageDict = {"from":"","mesg":"","iden":""}
+messageDictKeys = ["from","mesg","iden"]
 
 # keep track of which form is being used
 whichForm = {"form":""}
