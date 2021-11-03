@@ -12,3 +12,5 @@ JS8msg > Templates (holds HTML templates for displaying a form on the web browse
 JS8msg > Tmp (temporary file storage)<br>
 <br>
 Installation instructions are found in the Doc directory.
+<br>
+A BETA version is available for Windows 10.
