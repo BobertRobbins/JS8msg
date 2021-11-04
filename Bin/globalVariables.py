@@ -37,21 +37,6 @@ getStationID = 'STATION.GET_CALLSIGN'
 getRigFreq = 'RX.GET_FREQ'
 pingJS8 = 'PING'
 
-## 
-## A set of dictionaries and lists for ICS-213
-## 
-ics213FieldsData = {'inc':"",'to':"",'fm':"",'p1':"",'p2':"",'sb':"",'d1':"",'t1':"",'mg':"",'s1':"",'p3':"",'rp':"",'d2':"",'t2':"",'s2':"",'p4':"","file":"213"}
-ics213FieldsText =  {'inc':"Inc: ",'to':"To: ",'fm':"Fm: ",'p1':"Pos.: ",'p2':"Pos.: ",'sb':"Sub.: ",'d1':"Date: ",'t1':"Time: ",'mg':"Message",'s1':"Appr. ",'p3':"Pos. ",'rp':"Reply:  ",'d2':"Date:   ",'t2':"Time:   ",'s2':"Name: ",'p4':"Pos.:","file":"ICS-213"}
-origIcs213FieldKeys = ['inc','to','fm','p1','p2','sb','d1','t1','mg','s1','p3']
-rplyIcs213FieldKeys = ['rp','d2','t2','s2','p4','file']
-respIcs213FormData = {'rp':"",'d2':"",'t2':"",'s2':"",'p4':"",'file':""}
-totalIcs213Keys = ['inc','to','p1','fm','p2','sb','d1','t1','mg','s1','p3','rp','s2','p4','d2','t2','file']
-commonConfData = {'call':"", 'phone':"", 'name':"", 'addr':"", 'c-s-z':"", 'email':"", 'fdate':"", 'ftime':"", 'fUTC':""}
-commonConfText = {'call':"Callsign:", 'phone':"Phone#:", 'name':"Name: ", 'addr':"Address: ", 'c-s-z':"City/St/Zip:", 'email':"Email: ", 'fdate':"Date Fmt: ", 'ftime':"Time Fmt: ", 'fUTC':"Timezone: "}
-commonConfKeys = ['call','phone','name','addr', 'c-s-z','email','fdate', 'ftime','fUTC']
-readConfFlag = False
-readDataFlag = False
-
 ##
 ## some variables for facilitating the reading of messages from JS8call
 ##
@@ -69,6 +54,45 @@ storePath = ""
 templatesPath = ""
 tmpPath = ""
 configurePath = ""
+
+##
+## Configuration dictionary terms
+##
+commonConfData = {'call':"", 'phone':"", 'name':"", 'addr':"", 'c-s-z':"", 'email':"", 'fdate':"", 'ftime':"", 'fUTC':""}
+commonConfText = {'call':"Callsign:", 'phone':"Phone#:", 'name':"Name: ", 'addr':"Address: ", 'c-s-z':"City/St/Zip:", 'email':"Email: ", 'fdate':"Date Fmt: ", 'ftime':"Time Fmt: ", 'fUTC':"Timezone: "}
+commonConfKeys = ['call','phone','name','addr', 'c-s-z','email','fdate', 'ftime','fUTC']
+readConfFlag = False
+readDataFlag = False
+
+## 
+## A set of dictionaries and lists for ICS-213
+## 
+ics213FieldsData = {'inc':"",'to':"",'fm':"",'p1':"",'p2':"",'sb':"",'d1':"",'t1':"",'mg':"",'s1':"",'p3':"",'rp':"",'d2':"",'t2':"",'s2':"",'p4':"","file":"213"}
+ics213FieldsText =  {'inc':"Inc: ",'to':"To: ",'fm':"Fm: ",'p1':"Pos.: ",'p2':"Pos.: ",'sb':"Sub.: ",'d1':"Date: ",'t1':"Time: ",'mg':"Message",'s1':"Appr. ",'p3':"Pos. ",'rp':"Reply:  ",'d2':"Date:   ",'t2':"Time:   ",'s2':"Name: ",'p4':"Pos.:","file":"ICS-213"}
+origIcs213FieldKeys = ['inc','to','fm','p1','p2','sb','d1','t1','mg','s1','p3']
+rplyIcs213FieldKeys = ['rp','d2','t2','s2','p4','file']
+respIcs213FormData = {'rp':"",'d2':"",'t2':"",'s2':"",'p4':"",'file':""}
+totalIcs213Keys = ['inc','to','p1','fm','p2','sb','d1','t1','mg','s1','p3','rp','s2','p4','d2','t2','file']
+
+##
+## A set of dictionaries and lists for ICS-214
+##
+ics214FieldsData = {'inc':"",'dat':"",'tim':"",'und':"",'unl':"",'opp':"",'pre':"",'pps':"",'file':"214"}
+ics214FieldsText = {'inc':"Inc:",'dat':"Dat:",'tim':"Tim:",'und':"Und:",'unl':"Unl:",'opp':"Opp:",'pre':"Pre:",'pps':"Pps:",'file':"ICS-214"}
+ics214FieldsKeys = ['inc','dat','tim','und','unl','opp','pre','pps','file']
+ics214ListData = [{'nam':"",'pos':"",'hom':"",'atm':"",'evt':""}]
+ics214ListText = {'nam':"Name",'pos':"Position",'hom':"Homebase",'atm':"Activity Time",'evt':"Event"}
+ics214ListKeys = ['nam','dat','tim','und','unl','opp','pre','pps','file']
+
+##
+## A set of dictionaries and lists for ICS-309
+##
+ics214FieldsData = {'inc':"",'rop':"",'frm':"",'tm1':"",'to1':"",'tm2':"",'net':"",'pre':"",'pps':"",'dt1':"",'tm3':"",'file':"214"}
+ics214FieldsText = {'inc':"Inc:",'rop':"Rop:",'frm':"",'tm1':"Time:",'to1':"To:",'tm2':"Time:",'net':"Net:",'pre':"Preparer:",'pps':"Position:",'dt1':"Date:",'tm3':"Time:",'file':"ICS-214"}
+ics214FieldsKeys = ['inc','rop','frm','tm1','to1','tm2','net','pre','pps','dt1','tm3','file']
+ics214ListData = [{'nam':"",'fro':"",'to2':"",'msg':"",'file':"309"}]
+ics214ListText = {'nam':"Name:",'fro':"From:",'to2':"To:",'msg':"Message",'file':"ICS-309"}
+ics214ListKeys = ['nam','fro','to2','msg','file']
 
 ##
 ## TODO: add more dictionaries for other forms

@@ -187,7 +187,6 @@ def parseStringData(readData):
         except IndexError:
             if len(x[0]) > 0:
                 dataDict[textKey] = dataDict[textKey]+'\n'+x[0]
-                #dataDict[textKey] = dataDict[textKey]+x[0]
     return dataDict
 
 def makeCRC32(text):

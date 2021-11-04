@@ -9,10 +9,11 @@ from tkinter import ttk
 import sys
 from tkinter import messagebox as mb
 import globalVariables as gv
-import utilities as ut
+#import utilities as ut
 import classTab1 as T1
 import classTab2 as T2
 import classTab3 as T3
+import js8setup as js
 
 ## Global variables
 ## All supported forms need to be init'd here
@@ -114,6 +115,7 @@ class Tab5(Frame):
 ## ==================================== End of supported items ========================
 
 if __name__ == "__main__":
+    js.setup()
     Root = RootApp()
     Root.geometry("800x600")
     Root.title("JS8msg")

@@ -12,11 +12,8 @@ Copy JS8msg.desktop to your Desktop and set the executable permission.
   $ cp JS8msg/Local/JS8msg.desktop ~/Desktop
   $ chmod +x ~/Desktop/JS8msg.desktop
 
-Set the executable permission for the main Python script.
+Lastly, set the executable permission for the main Python script.
   $ chmod +x ~/JS8msg/Bin/js8msg.py
-  
-Run the createMissingDir.py script
-  $ python3 ~/JS8msg/Bin/createMissingDir.py
 
 Windows 10:
 
