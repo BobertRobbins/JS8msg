@@ -14,4 +14,4 @@ JS8msg > Tmp (temporary file storage)<br>
 <br>
 Installation instructions are found in the Doc directory.
 <br>
-A BETA version is available for Windows 10.
+A BETA version is available for Windows 10. Copy the <b>JS8msg.exe file</b> to your home directory and execute it. The program will build the needed directories and files before starting the main program.
