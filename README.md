@@ -12,6 +12,6 @@ JS8msg > Messages (hold locally created messages as well as downloaded messages)
 JS8msg > Templates (holds HTML templates for displaying a form on the web browser)<br>
 JS8msg > Tmp (temporary file storage)<br>
 <br>
-Installation instructions are found in the Doc directory.
-<br>
+For Linux, installation instructions will be found in the Doc directory.
+<br><br>
 A BETA version is available for Windows 10. Copy the <b>JS8msg.exe file</b> to your home directory and execute it. The program will build the <b>"Doc, Config, Local, Messages, Templates and Tmp"</b> directories and the needed files before starting the main program.
