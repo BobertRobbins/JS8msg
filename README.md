@@ -1,5 +1,5 @@
 # JS8msg is a companion program to JS8call and adds EMCOMM form support to JS8call. 
-This program was written in Python 3.8, tested in Python 3.9 and is released under the GPL v3 license.
+This program was written in Python 3.8, tested in Python 3.9 and Python 3.10. JS8msg is released under the GPL v3 license.
 The software should be considered BETA. Rewrites will occur as the code is made more supportive of multi-platform.
 
 Directory structure:
