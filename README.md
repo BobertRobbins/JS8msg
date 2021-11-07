@@ -1,5 +1,5 @@
 # JS8msg is a companion program to JS8call and adds EMCOMM form support to JS8call. 
-This program was written in Python 3.8, tested in Python 3.9 and is released under the GPL v3 license.
+This program was written in Python 3.8, tested in Python 3.9 and Python 3.10. JS8msg is released under the GPL v3 license.
 The software should be considered BETA. Rewrites will occur as the code is made more supportive of multi-platform.
 
 Directory structure:
@@ -12,6 +12,6 @@ JS8msg > Messages (hold locally created messages as well as downloaded messages)
 JS8msg > Templates (holds HTML templates for displaying a form on the web browser)<br>
 JS8msg > Tmp (temporary file storage)<br>
 <br>
-Installation instructions are found in the Doc directory.
-<br>
-A BETA version is available for Windows 10.
+For Linux, installation instructions will be found in the Doc directory.
+<br><br>
+For Windows 10, copy the <b>JS8msg.exe file</b> to your home directory and execute it. The program will build the <b>"Doc, Config, Local, Messages, Templates and Tmp"</b> directories and the needed files before starting the main program.
