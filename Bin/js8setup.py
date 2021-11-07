@@ -26,84 +26,95 @@ def setup():
     ## Get the true home dir for multi-platform
     ## Should return absolute path regardless of OS
     homeDir = os.path.expanduser('~')
-
-    extDocumentPath = os.path.join(homeDir,"Doc")
-    extLocalPath = os.path.join(homeDir,"Local")
-    extTemplatePath = os.path.join(homeDir,"Templates")
+    ## Path to Desktop
     desktopDir = os.path.join(homeDir,"Desktop")
-    linuxLocalBinDir = os.path.join(homeDir,"bin")
 
-    try:
+    if sysPlatform == "Windows":
+        extDocumentPath = os.path.join(homeDir,"Doc")
+        extLocalPath = os.path.join(homeDir,"Local")
+        extTemplatePath = os.path.join(homeDir,"HtmlTemplates")
+
+        try:
             os.mkdir(extDocumentPath)
-    except: ## directory already exists, do nothing
+            print("Created directory 'Doc'.")
+        except: ## directory already exists, do nothing
             pass
-    try:
+        try:
             os.mkdir(extLocalPath)
-    except: ## directory already exists, do nothing
+            print("Created directory 'Local'.")
+        except: ## directory already exists, do nothing
             pass
-    try:
+        try:
             os.mkdir(extTemplatePath)
-    except: ## directory already exists, do nothing
+            print("Created directory 'HtmlTemplates'.")
+        except: ## directory already exists, do nothing
             pass
     
-    for key in keyList:
-        fileName = os.path.join(extDocumentPath,fileList[key])
-        ## if the file exists, remove and replace it (auto-upgrade of file)
-        if os.path.exists(fileName):
-            os.remove(fileName)
-        stringData = doc.docArray[key]
-        byteData = bytes(stringData,'utf-8')
-        decodedData = base64.b64decode(byteData)
-        rawArray = bz2.decompress(decodedData)
-        print("Updating or creating document %s." % fileName)
-        with open(fileName,"wb") as f:
-            f.write(rawArray)
+        for key in keyList:
+            fileName = os.path.join(extDocumentPath,fileList[key])
+            ## if the file exists, remove and replace it (auto-upgrade of file)
+            if os.path.exists(fileName):
+                os.remove(fileName)
+            stringData = doc.docArray[key]
+            byteData = bytes(stringData,'utf-8')
+            decodedData = base64.b64decode(byteData)
+            rawArray = bz2.decompress(decodedData)
+            print("Updating or creating document %s." % fileName)
+            with open(fileName,"wb") as f:
+                f.write(rawArray)
 
-    for key in keyList2:
-        fileName = os.path.join(extLocalPath,fileList2[key])
-        ## if the file exists, remove and replace it (auto-upgrade of file)
-        if os.path.exists(fileName):
-            os.remove(fileName)
-        stringData = lc.localArray[key]
-        byteData = bytes(stringData,'utf-8')
-        decodedData = base64.b64decode(byteData)
-        rawArray = bz2.decompress(decodedData)
-        print("Updating or creating file %s." % fileName)
-        with open(fileName,"wb") as f:
-            f.write(rawArray)
+        for key in keyList2:
+            fileName = os.path.join(extLocalPath,fileList2[key])
+            ## if the file exists, remove and replace it (auto-upgrade of file)
+            if os.path.exists(fileName):
+                os.remove(fileName)
+            stringData = lc.localArray[key]
+            byteData = bytes(stringData,'utf-8')
+            decodedData = base64.b64decode(byteData)
+            rawArray = bz2.decompress(decodedData)
+            print("Updating or creating file %s." % fileName)
+            with open(fileName,"wb") as f:
+                f.write(rawArray)
 
-    for key in keyList3:
-        fileName = os.path.join(extLocalPath,fileList3[key])
-        ## if the file exists, remove and replace it (auto-upgrade of file)
-        if os.path.exists(fileName):
-            os.remove(fileName)
-        stringData = tp.templateArray[key]
-        byteData = bytes(stringData,'utf-8')
-        decodedData = base64.b64decode(byteData)
-        rawArray = bz2.decompress(decodedData)
-        print("Updating or creating template %s." % fileName)
-        with open(fileName,"wb") as f:
-            f.write(rawArray)
+        for key in keyList3:
+            fileName = os.path.join(extTemplatePath,fileList3[key])
+            ## if the file exists, remove and replace it (auto-upgrade of file)
+            if os.path.exists(fileName):
+                os.remove(fileName)
+            stringData = tp.templateArray[key]
+            byteData = bytes(stringData,'utf-8')
+            decodedData = base64.b64decode(byteData)
+            rawArray = bz2.decompress(decodedData)
+            print("Updating or creating template %s." % fileName)
+            with open(fileName,"wb") as f:
+                f.write(rawArray)
 
-    ## Get system platform information
-    ## and copy over icons if missing
+        iFile = "JS8msg.lnk"
+    
+        iconFile = os.path.join(extLocalPath,iFile)
+        iconCheck = os.path.join(desktopDir,iFile)
+        if not os.path.exists(iconCheck):
+            shutil.copy2(iconFile,desktopDir)
+
     if sysPlatform == "Linux":
         iFile = "JS8msg.desktop"
-    elif sysPlatform == "Windows":
-        iFile = "JS8msg.lnk"
-    iconFile = os.path.join(extLocalPath,iFile)
-    iconCheck = os.path.join(desktopDir,iFile)
-    if not os.path.exists(iconCheck):
-        shutil.copy2(iconFile,desktopDir)
-    shellFile = os.path.join(extLocalPath,"js8msg.sh")
-    linuxShell = os.path.join(linuxLocalBinDir,"js8msg.sh")
-    if sysPlatform == "Linux":
+        linuxLocalBinDir = os.path.join(homeDir,"bin")
+        linuxShell = os.path.join(linuxLocalBinDir,"js8msg.sh")
+        linuxShellTunc = os.path.join(linuxLocalBinDir,"js8msg")
+        linuxLocalPath = os.path.join(homeDir,"JS8msg/Local")
+        linuxLocalDirFile = os.path.join(linuxLocalPath,"js8msg.sh")
+        iconCheck = os.path.join(desktopDir,iFile)
+        iconFile = os.path.join(linuxLocalPath,iFile)
+        try:
+            os.mkdir(linuxLocalBinDir)
+        except: ## directory already exists, do nothing
+            pass
         if not os.path.exists(linuxShell):
-            shutil.copy2(shellFile,linuxLocalBinDir)
+            shutil.copy2(linuxLocalDirFile,linuxLocalBinDir)
+            os.chmod(linuxShell,0o755)
+            os.rename(linuxShell,linuxShellTunc)
+        if not os.path.exists(iconCheck):
+            shutil.copy2(iconFile,desktopDir)
+            os.chmod(iconCheck,0o755)
 
     return
-
-
-      
-
-

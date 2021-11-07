@@ -9,7 +9,7 @@ from tkinter import ttk
 import sys
 from tkinter import messagebox as mb
 import globalVariables as gv
-#import utilities as ut
+
 import classTab1 as T1
 import classTab2 as T2
 import classTab3 as T3

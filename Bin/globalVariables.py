@@ -21,7 +21,7 @@ elif sysPlatform == "Windows":
 configPath = os.getcwd()+pathSep+"Config"
 msgPath = os.getcwd()+pathSep+"Messages"
 localPath = os.getcwd()+pathSep+"Local"
-templatePath = os.getcwd()+pathSep+"Templates"+pathSep
+templatePath = os.getcwd()+pathSep+"HtmlTemplates"+pathSep
 binPath = os.path.dirname(__file__)
 tempPath = os.getcwd()+pathSep+"Tmp"+pathSep
 

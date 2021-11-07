@@ -456,14 +456,18 @@ class Tab3_Frame1(Frame):
                         master.replyMsg.set(ics213FormData[key])
                     elif key == "s2":
                         respIcs213FormData[key] = ics213FormData[key]
+                        master.entryName.set(ics213FormData[key])
                     elif key == "p4":
                         respIcs213FormData[key] = ics213FormData[key]
+                        master.entryNamePos.set(ics213FormData[key])
                     elif key == "d2":
                         master.loadedFileD2 = ics213FormData[key]
                         respIcs213FormData[key] = ics213FormData[key]
+                        master.rplyDateData.set("Date: "+ics213FormData[key])
                     elif key == "t2":
                         master.loadedFileT2 = ics213FormData[key]
                         respIcs213FormData[key] = ics213FormData[key]
+                        master.rplyTimeData.set("Time: "+ics213FormData[key])
                     elif key == "file":
                         ## must be accounted for. Will be needed when calling HTML template
                         master.tempFile = ics213FormData[key]

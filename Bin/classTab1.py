@@ -4,6 +4,7 @@ from tkinter import messagebox as mb
 import sys
 import os
 import webbrowser as wb
+import platform
 import globalVariables as gv
 import utilities as ut
 import js8API as api
@@ -33,6 +34,8 @@ class Tab1(Frame):
             os.mkdir(gv.tempPath)
         except:
             pass
+
+        sysPlatform = platform.system()
 
         ## Specify column width for form
         colWidth =28
@@ -222,7 +225,7 @@ class Tab1(Frame):
                     #formKeys = gv.totalIcs213Keys
                     templateFile = ""
                     if formData["file"] == "213":
-                        templateFile = gv.templatePath+"ics213_template.html"
+                        templateFile = os.path.join(gv.templatePath,"ics213_template.html")
                     ## add 'elif' to use a HTML template for other forms
 
                     ## outputHtml gives back a HTML document
@@ -304,7 +307,7 @@ class Tab1(Frame):
         ## Add the callsign Listbox widget
         self.chooseList = Listbox(self, selectmode=SINGLE, selectbackground="#f8f8d8", bg="green1", width=10)
         buildCall()
-        self.chooseList.grid(column=0,row = listRow, padx = 13, pady=vertPad, sticky="nw")
+        self.chooseList.grid(column=0,row = listRow, padx = 18, pady=vertPad, sticky="nw")
         self.chooseList.activate(self.callsignSelIndex)
         self.chooseList.see(self.callsignSelIndex)
         ## add a scrollbar widget for when the callsign list size exceeds the displayed area
@@ -326,7 +329,11 @@ class Tab1(Frame):
         self.chooseMessage.see(self.msgListIndex)
         ## Added a scrollbar widget for when the messages list size exceeds the displayed area
         self.msgScrollBar = Scrollbar(self, orient=VERTICAL, command=self.chooseMessage.yview)
-        self.msgScrollBar.grid(column=0, row=listRow, pady=vertPad, sticky="nse", padx=196)
+        ## adjust offset per OS due to font differences
+        if sysPlatform == "Windows":
+            self.msgScrollBar.grid(column=0, row=listRow, pady=vertPad, sticky="nse", padx=150) # windows?
+        elif sysPlatform == "Linux":
+            self.msgScrollBar.grid(column=0, row=listRow, pady=vertPad, sticky="nse", padx=196) # linux?
         ## Link the scrollbar widget to the Listbox widget
         self.chooseMessage['yscrollcommand'] = self.msgScrollBar.set
 
