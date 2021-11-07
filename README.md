@@ -15,9 +15,9 @@ For a Linux installation:
   JS8msg > Tmp (temporary file storage)<br>
 <br>
 Quick Guide for first time installation in Linux:
-  Download the zipfile from https://github.com/tkocou/JS8msg. Unzip the file in your home directory. Open a terminal window and type in:<br><br>
+  Download the zipfile from https://github.com/tkocou/JS8msg. Unzip the file in your home directory. Open a terminal window and type in:<br>
     cd JS8msg<br>
-    ./Bin/js8msg.py
+    ./Bin/js8msg.py<br>
   The program will automatically create missing directories as well as set up a clickable desktop icon.
   Since the configuration file has not been created yet, just click on "Cancel" and then the Quit button. Afterwards, just click on the desktop icon to start JS8msg.
 <br><br>
