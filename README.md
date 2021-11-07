@@ -4,15 +4,15 @@ For Linux, you need a minimum level Python of 3.8 installed on your system. For 
 
 The software should be considered BETA. Rewrites will occur as the code is made more supportive of multi-platform.
 
-Directory structure:
-For a Linux installation:
-  home directory > JS8msg > Bin (Python scripts go here)<br>
-  JS8msg > Doc (documentation files)<br>
-  JS8msg > Config (holds the configuration file)<br>
-  JS8msg > Local (holds icon image, *.desktop file, *.sh starter shell)<br>
-  JS8msg > Messages (hold locally created messages as well as downloaded messages)<br>
-  JS8msg > HtmlTemplates (holds HTML templates for displaying a form on the web browser)<br>
-  JS8msg > Tmp (temporary file storage)<br>
+Directory structure:<br>
+For a Linux installation:<br>
+<&nbsp><&nbsp>  home directory > JS8msg > Bin (Python scripts go here)<br>
+<&nbsp><&nbsp>  JS8msg > Doc (documentation files)<br>
+<&nbsp><&nbsp>  JS8msg > Config (holds the configuration file)<br>
+<&nbsp><&nbsp>  JS8msg > Local (holds icon image, *.desktop file, *.sh starter shell)<br>
+<&nbsp><&nbsp>  JS8msg > Messages (hold locally created messages as well as downloaded messages)<br>
+<&nbsp><&nbsp>  JS8msg > HtmlTemplates (holds HTML templates for displaying a form on the web browser)<br>
+<&nbsp><&nbsp>  JS8msg > Tmp (temporary file storage)<br>
 <br>
 Quick Guide for first time installation in Linux:<br>
   Download the zipfile from https://github.com/tkocou/JS8msg. Unzip the file in your home directory. Open a terminal window and type in:<br>
