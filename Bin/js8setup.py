@@ -12,8 +12,8 @@ import locals as lc
 import template as tp
 
 def setup():
-    keyList = ['apidoc','copydoc','installdoc','guidedoc']
-    fileList = {'apidoc':"API.pdf",'copydoc':"COPYING",'installdoc':"INSTALL",'guidedoc':"JS8msg Guide.pdf"}
+    keyList = ['apidoc','copydoc','installdoc','guidedoc','deindoc']
+    fileList = {'apidoc':"API.pdf",'copydoc':"COPYING",'installdoc':"INSTALL",'guidedoc':"JS8msg Guide.pdf",'deindoc':"DEINSTALL"}
 
     keyList2 = ['ldesk','lshell','wdesk','licon','wicon']
     fileList2 = {'ldesk':"JS8msg.desktop",'lshell':"js8msg",'wdesk':"JS8msg.lnk",'licon':"js8msg.png",'wicon':"js8msg.ico"}
