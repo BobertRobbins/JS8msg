@@ -7,6 +7,7 @@
 ## Global Paths
 import os
 import platform
+from tkinter.constants import FALSE
 
 ## Probably need to get system platform information
 pathSep = ""
@@ -29,6 +30,9 @@ tempPath = os.getcwd()+pathSep+"Tmp"+pathSep
 ##
 ## JS8Call APIs
 txSendMessage = 'TX.SEND_MESSAGE'
+rxGetBandActivityText = 'RX.GET_TXT'
+txGetText = 'TX.GET_TEXT'
+rxGetBandActivity = 'RX.GET_BAND_ACTIVITY'
 rxGetCallActivity = 'RX.GET_CALL_ACTIVITY'
 rxGetSelectedCall = 'RX.GET_CALL_SELECTED'
 inboxGetMessages = 'INBOX.GET_MESSAGES'
@@ -46,6 +50,10 @@ messageDictKeys = ["from","mesg","iden"]
 
 # keep track of which form is being used
 whichForm = {"form":""}
+
+## flag for japanese use
+japanFlag = FALSE
+
 ## Some path variables
 ## 
 binPath = ""
@@ -58,9 +66,9 @@ configurePath = ""
 ##
 ## Configuration dictionary terms
 ##
-commonConfData = {'call':"", 'phone':"", 'name':"", 'addr':"", 'c-s-z':"", 'email':"", 'fdate':"", 'ftime':"", 'fUTC':""}
-commonConfText = {'call':"Callsign:", 'phone':"Phone#:", 'name':"Name: ", 'addr':"Address: ", 'c-s-z':"City/St/Zip:", 'email':"Email: ", 'fdate':"Date Fmt: ", 'ftime':"Time Fmt: ", 'fUTC':"Timezone: "}
-commonConfKeys = ['call','phone','name','addr', 'c-s-z','email','fdate', 'ftime','fUTC']
+commonConfData = {'call':"", 'phone':"", 'name':"", 'addr':"", 'c-s-z':"", 'email':"", 'fdate':"", 'ftime':"", 'fUTC':"", "jflag":"FALSE"}
+commonConfText = {'call':"Callsign:", 'phone':"Phone#:", 'name':"Name: ", 'addr':"Address: ", 'c-s-z':"City/St/Zip:", 'email':"Email: ", 'fdate':"Date Fmt: ", 'ftime':"Time Fmt: ", 'fUTC':"Timezone: ", 'jflag':"FALSE"}
+commonConfKeys = ['call','phone','name','addr', 'c-s-z','email','fdate', 'ftime','fUTC','jflag']
 readConfFlag = False
 readDataFlag = False
 

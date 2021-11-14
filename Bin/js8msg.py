@@ -15,6 +15,7 @@ import classTab2 as T2
 import classTab3 as T3
 import js8setup as js
 
+
 ## Global variables
 ## All supported forms need to be init'd here
 ## Otherwise you run into 'scope of variable' problems
@@ -27,6 +28,7 @@ respIcs213FormData = gv.respIcs213FormData
 notebookTabs = []
 formDataToSend = ""
 callsignSelected = ""
+
 
 ## added global paths for config file and storing/loading data files
 ## globalVariables.py

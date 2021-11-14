@@ -4,6 +4,7 @@
 ##
 from datetime import timezone
 import datetime as dt
+from tkinter.constants import FALSE, TRUE
 from tkinter.filedialog import asksaveasfile, askopenfile
 import bz2
 import base64
@@ -173,6 +174,13 @@ def parseStringData(readData):
             textKey = "mg"
         elif x[0] == "rp":
             textKey = "rp"
+
+        ## Trap the jflag in the configuration data
+        if x[0] == "jflag":
+            if x[1] == "FALSE":
+                gv.japanFlag = FALSE
+            elif x[1] == "TRUE":
+                gv.japanFlag = TRUE
 
         ## what will happen now is if we encountered a
         ## multiline Text() message, textKey will be set

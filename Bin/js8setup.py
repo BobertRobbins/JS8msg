@@ -26,6 +26,7 @@ def setup():
     ## Get the true home dir for multi-platform
     ## Should return absolute path regardless of OS
     homeDir = os.path.expanduser('~')
+    os.chdir(homeDir)
     ## Path to Desktop
     desktopDir = os.path.join(homeDir,"Desktop")
 

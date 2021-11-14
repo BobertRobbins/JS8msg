@@ -8,7 +8,7 @@ import platform
 import globalVariables as gv
 import utilities as ut
 import js8API as api
-
+import henkankun as hn
 
 
 #### ======================== JS8msg Control =============================
@@ -37,15 +37,17 @@ class Tab1(Frame):
 
         sysPlatform = platform.system()
 
+
+
         ## Specify column width for form
-        colWidth =28
+        colWidth =23
 
         ## Some Variables for Tab1
         self.dropdown = StringVar()
         self.group = StringVar()
         self.callsignSelected = ""
         self.callsignSelIndex = 0
-        self.formDataToSend = "Load a completed form to send."
+        self.formDataToSend = ""
         self.labelText = "No Call"
         self.labelText2 = "No Message"
         self.groupList = ['@ALLCALL']
@@ -55,6 +57,10 @@ class Tab1(Frame):
         self.msgSelected = {}
         self.htmlFile = ""
         self.stationCallSign = ""
+        self.japaneseList = []
+        self.japanFlag = FALSE
+
+
 
 
         ## build up the callsign list
@@ -98,7 +104,7 @@ class Tab1(Frame):
             ## Add the list of groups/callsigns to the messages Listbox widget
             index = 0
             for x in self.messageList:
-                self.chooseMessage.insert(index,x["fm"]+', '+x["id"])
+                self.chooseMessage.insert(index,x["from"]+', '+x["iden"])
                 index += 1
 
         def getGroup():
@@ -116,14 +122,28 @@ class Tab1(Frame):
             if selAction == "Load Form":
                 loadSourceData()
                 self.chooseAction.set('')
-            elif selAction == "Send Tx Message":
+            elif selAction == "Send Form Message":
                 sendTxMessage()
                 self.chooseAction.set('')
-            elif selAction == "Store Message to Inbox":
+            elif selAction == "Store Form Message to Inbox":
                 storeMessage()
                 self.chooseAction.set('')
-            elif selAction == "Get messages from Inbox":
+            elif selAction == "Get All Messages from Inbox":
                 getMessages()
+                self.chooseAction.set('')
+            elif selAction == "Send Text Area":
+                sendTextArea()
+                self.chooseAction.set('')
+            elif selAction == "Store Text Area to Inbox":
+                storeTextArea()
+                self.chooseAction.set('')
+            elif selAction == "Activate Henkankun":
+                self.japanFlag = TRUE
+                setHenkankunButtons()
+                self.chooseAction.set('')
+            elif selAction == "Deactivate Henkankun":
+                self.japanFlag = FALSE
+                ut.clearWidgetForm(self.japaneseList)
                 self.chooseAction.set('')
 
         ## Callback for ListBox Button
@@ -206,7 +226,7 @@ class Tab1(Frame):
                     ## Use the extension which is part of the data dictionary
                     ##
                     ## need to extract file extension and reference it
-                    saveFile = self.stationCallSign+self.msgSelected["id"]+'_recvd.'+formData["file"]
+                    saveFile = self.stationCallSign+self.msgSelected["iden"]+'_recvd.'+formData["file"]
                     ## complete the path
                     saveFilePath = os.path.join(gv.msgPath,saveFile)
                     fh = open(saveFilePath, "w")
@@ -245,6 +265,8 @@ class Tab1(Frame):
                     url = 'file://'+os.path.realpath(self.htmlFile)
                     ## open the HTML file in a web browser
                     wb.open(url)
+                    self.messageTextBox.delete(1.0,END)
+                    self.messageTextBox.insert(END,"If you do not see a webpage, check a web browser for ICS Form")
                     ## Sometimes the web browser will send extra messages to the
                     ## Python console
                     ## Clear the Python console of messages from web browser
@@ -258,11 +280,66 @@ class Tab1(Frame):
                     ## display regular text in Text box
                     formData = self.msgSelected["mesg"]
                     self.messageTextBox.delete(1.0,END)
-                    self.messageTextBox.insert(END,formData+'\n')
+                    if formData[:6] == "ENC IN" :
+                        self.messageTextBox.insert(END,formData[:-2])
+                        self.japanFlag = TRUE
+                        setHenkankunButtons()
+                    else:
+                        self.messageTextBox.insert(END,formData+'\n')
                 ## update the display and show the selected message id
                 listBoxLabel2 = Label(self)
                 listBoxLabel2.grid(column=0,row=1, sticky="se", padx=13)
                 listBoxLabel2.configure(text=self.labelText2, bg="#d8b8d8", pady=6, width = 23)
+
+        def setHenkankunButtons():
+            ## reset list variable
+            self.japaneseList = []
+
+            ## add buttons and track widgets
+
+            encodeButton1 = Button(self, text="Encode Shift-JIS", command=encodeTextAreaJIS)
+            encodeButton1.configure(bg="yellow1", width=12, height=2)
+            encodeButton1.grid(column=1,row=3, sticky="nw", pady=0, padx=10)
+            self.japaneseList.append(encodeButton1)
+
+            decodeButton1 = Button(self, text="Decode Shift-JIS", command=decodeTextAreaJIS)
+            decodeButton1.configure(bg="green1", width=12, height=2)
+            decodeButton1.grid(column=1,row=4, sticky="nw", pady=0, padx=10)
+            self.japaneseList.append(decodeButton1)
+
+            encodeButton2 = Button(self, text="Encode UTF-8", command=encodeTextAreaUTF8)
+            encodeButton2.configure(bg="yellow1", width=12, height=2)
+            encodeButton2.grid(column=1,row=5, sticky="nw", pady=0, padx=10)
+            self.japaneseList.append(encodeButton2)
+
+            decodeButton2 = Button(self, text="Decode UTF-8", command=decodeTextAreaUTF8)
+            decodeButton2.configure(bg="green1", width=12, height=2)
+            decodeButton2.grid(column=1,row=6, sticky="nw", pady=0, padx=10)
+            self.japaneseList.append(decodeButton2)
+
+        def encodeTextAreaJIS():
+            if self.japanFlag:
+                hn.encodeShiftJIS(self.messageTextBox)
+            else:
+                pass
+
+        def decodeTextAreaJIS():
+            if self.japanFlag:
+                hn.decodeShiftJIS(self.messageTextBox)
+            else:
+                pass
+
+        def encodeTextAreaUTF8():
+            if self.japanFlag:
+                hn.encodeUTF8(self.messageTextBox)
+            else:
+                pass
+
+        def decodeTextAreaUTF8():
+            if self.japanFlag:
+                hn.decodeUTF8(self.messageTextBox)
+            else:
+                pass
         
         #### main display of widgets ####
         topRow =0
@@ -270,7 +347,7 @@ class Tab1(Frame):
         self.label = Label(self, text="Select =-> ")
         self.label.grid(column=0,row=topRow, sticky="w")
         self.chooseAction = ttk.Combobox(self, width=colWidth, textvariable = self.dropdown, background="#f8d8d8")
-        self.chooseAction['values'] = ["Load Form","Send Tx Message","Store Message to Inbox","Get messages from Inbox"]
+        self.chooseAction['values'] = ["Load Form","Send Form Message","Store Form Message to Inbox","Get All Messages from Inbox","Send Text Area","Store Text Area to Inbox","Activate Henkankun","Deactivate Henkankun"]
         self.chooseAction.grid(column=0,row=topRow, sticky="w", padx=80)
         ## Note: callback function must preceed the combobox widget
         self.chooseAction.bind('<<ComboboxSelected>>', selectMsgOption)
@@ -285,7 +362,7 @@ class Tab1(Frame):
         ## Quit program button
         quitButton = Button(self, text="Quit", command=lambda:self.quitProgram())
         quitButton.configure(bg="blue", fg="white")
-        quitButton.grid(column=1,row=topRow, sticky = "e", padx=20)
+        quitButton.grid(column=1,row=topRow, sticky = "w", padx=10)
 
         ## set the height of the scrollbars
         vertPad = 32
@@ -305,9 +382,9 @@ class Tab1(Frame):
         self.listBoxButton.grid(column=0, row=selRow, sticky="w")
 
         ## Add the callsign Listbox widget
-        self.chooseList = Listbox(self, selectmode=SINGLE, selectbackground="#f8f8d8", bg="green1", width=10)
+        self.chooseList = Listbox(self, selectmode=SINGLE, selectbackground="#f8f8d8", bg="green1", width=23)
         buildCall()
-        self.chooseList.grid(column=0,row = listRow, padx = 18, pady=vertPad, sticky="nw")
+        self.chooseList.grid(column=0,row = listRow, padx = 15, pady=vertPad, sticky="nw")
         self.chooseList.activate(self.callsignSelIndex)
         self.chooseList.see(self.callsignSelIndex)
         ## add a scrollbar widget for when the callsign list size exceeds the displayed area
@@ -337,15 +414,28 @@ class Tab1(Frame):
         ## Link the scrollbar widget to the Listbox widget
         self.chooseMessage['yscrollcommand'] = self.msgScrollBar.set
 
+        self.clearTextAreaButton = Button(self, text="Clear Text Area", command=lambda: clearTextArea())
+        self.clearTextAreaButton.configure(bg="blue", fg="white", width=22)
+        self.clearTextAreaButton.grid(column=0, row=selRow, sticky="sew", padx=200)
+                
+
 
         txtRow = 3
         ## Added a general purpose Text area to the display
         self.messageTextBox = Text(self)
-        self.messageTextBox.grid(column=0, row=txtRow, sticky="w")
-        self.messageTextBox.configure(background="#f8d8d8", wrap="word")
+        self.messageTextBox.grid(column=0, row=txtRow, sticky="nse", padx=0, rowspan=4)
+        self.messageTextBox.configure(background="#f8d8d8", wrap="word", height=15, width=73)
         self.messageTextBox.delete(1.0,END)
         self.messageTextBox.insert(END,self.formDataToSend)
+        ## add a scrollbar widget for when the callsign list size exceeds the displayed area
+        self.scrollBarText = Scrollbar(self, orient=VERTICAL, command=self.messageTextBox.yview)
+        self.scrollBarText.grid(column=0, row= txtRow, sticky="nsw", rowspan =4)
+        ## Link the scrollbar widget to the Listbox widget
+        self.messageTextBox['yscrollcommand'] = self.scrollBar.set
 
+        ## added buttons to invoke the Japanese encoding functions written by JE6VGZ
+        if self.japanFlag:
+            setHenkankunButtons()
 #### Form messages will be 'wrapped' so as to destinguish between normal text
 #### and a form which will need displaying in the web browser
         def sendTxMessage():
@@ -355,12 +445,42 @@ class Tab1(Frame):
                 ## which is stored in self.formDataToSend
                 ## send it to JS8call for transmitting immediately
                 ## self.formDataToSend is encoded and wrapped in 'api.sendLive'
+
                 result = api.sendLive(self.callsignSelected,self.formDataToSend)
                 if result is None:
                     mb.showwarning(None,"Problem with JS8call transmitting message.")
             else:
                 ## remind them to select a destination callsign
-                mb.showinfo("No callsign selected","Select one from the list of callsigns.")         
+                mb.showinfo("No callsign selected","Select one from the list of callsigns.")
+
+        def sendTextArea():
+            result = loadTextArea()
+            if result == None:
+                return result
+            if self.callsignSelected:
+                if self.japanFlag:
+                    self.formDataToSend = "MSG "+self.formDataToSend
+                result = api.sendLiveText(self.callsignSelected,self.formDataToSend)
+                if result is None:
+                    mb.showwarning(None,"Problem with JS8call transmitting message.")
+            else:
+                ## remind them to select a destination callsign
+                mb.showinfo("No callsign selected","Select one from the list of callsigns.")
+
+        def storeTextArea():
+            result = loadTextArea()
+            if result == None:
+                return result
+            if self.callsignSelected:
+                #if self.japanFlag:
+                #    self.formDataToSend = "MSG "+self.formDataToSend
+                result = api.sendTextAreaToInbox(self.callsignSelected,self.formDataToSend)
+                if result is not None:
+                    mb.showinfo("Result","Message is stored in Inbox!")
+                else:
+                    mb.showwarning(None,"Problem with JS8call storing message.")
+            else:
+                mb.showinfo("No callsign selected","Select one from the list of callsigns.")
 
         def storeMessage():
             ## valid if you selected a destination callsign
@@ -386,7 +506,7 @@ class Tab1(Frame):
                 self.chooseMessage.delete(0,END)
                 index = 0
                 for x in self.messageList:
-                    self.chooseMessage.insert(index,x["fm"]+', '+x["id"])
+                    self.chooseMessage.insert(index,x["from"]+', '+x["iden"])
                     index += 1
             else:
                 mb.showwarning(None,"Problem fetching messages from inbox")
@@ -403,9 +523,25 @@ class Tab1(Frame):
             ## update Text box
             self.messageTextBox.delete(1.0,END)
             self.messageTextBox.insert(END,formDataToSend+'\n')
-            self.formDataToSend = formDataToSend 
+            self.formDataToSend = formDataToSend
 
-          
+        def loadTextArea():
+            ## fetch the text within the Text box
+            try:
+                self.formDataToSend = self.messageTextBox.get(1.0,END)
+                #print("Length of text: ", len(self.formDataToSend))
+                if len(self.formDataToSend) == 1:
+                    mb.showwarning(None,"Type a text message in the Text Area.")
+                    return None
+                return self.formDataToSend
+            except:
+                mb.showwarning(None,"Problem fetching text.")
+                return None
+
+        def clearTextArea():
+            self.messageTextBox.delete(1.0,END)
+            return
+            
 
     def quitProgram(self):
         ## check if the temporary HTML file exists

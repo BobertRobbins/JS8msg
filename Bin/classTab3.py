@@ -420,6 +420,7 @@ class Tab3_Frame1(Frame):
             ## result will be a None object if command was cancelled
             if result is not None:
                 ics213FormData = result
+                #print("ics213FormData is: ",ics213FormData)
                 # Set the flag indicating that a file was loaded
                 # Flag will be reset when the form is cleared
                 master.loadedFlag = True
@@ -454,20 +455,27 @@ class Tab3_Frame1(Frame):
                     elif key == "rp":
                         respIcs213FormData[key] = ics213FormData[key]
                         master.replyMsg.set(ics213FormData[key])
+                        #print("resp load data: ",key,":",respIcs213FormData[key])
                     elif key == "s2":
+                        #print(key,ics213FormData[key])
                         respIcs213FormData[key] = ics213FormData[key]
                         master.entryName.set(ics213FormData[key])
+                        #print("resp load data: ",key,":",respIcs213FormData[key])
                     elif key == "p4":
+                        #print(key,ics213FormData[key])
                         respIcs213FormData[key] = ics213FormData[key]
                         master.entryNamePos.set(ics213FormData[key])
+                        #print("resp load data: ",key,":",respIcs213FormData[key])
                     elif key == "d2":
                         master.loadedFileD2 = ics213FormData[key]
                         respIcs213FormData[key] = ics213FormData[key]
                         master.rplyDateData.set("Date: "+ics213FormData[key])
+                        #print("resp load data: ",key,":",respIcs213FormData[key])
                     elif key == "t2":
                         master.loadedFileT2 = ics213FormData[key]
                         respIcs213FormData[key] = ics213FormData[key]
                         master.rplyTimeData.set("Time: "+ics213FormData[key])
+                        #print("resp load data: ",key,":",respIcs213FormData[key])
                     elif key == "file":
                         ## must be accounted for. Will be needed when calling HTML template
                         master.tempFile = ics213FormData[key]
@@ -633,25 +641,31 @@ class Tab3_Frame2(Frame):
         self.rplyFieldKeys = gv.rplyIcs213FieldKeys
         self.commonConfData = gv.commonConfData
         self.ics213FormData = gv.ics213FieldsData
+        self.respIcs213FormData = gv.respIcs213FormData
 
-        #### Assume that Tab1 - Frame 1 has loaded or assigned configuration data
+        #print("init - respdata: ",self.respIcs213FormData)
+        #### Assume that Tab3 - Frame 1 has loaded or assigned configuration data
         ## Transfer configuration from global to local
         for key in gv.commonConfKeys:
             self.commonConfData[key] = commonConfData[key]
         
-        for key in gv.rplyIcs213FieldKeys:    
+        for key in gv.rplyIcs213FieldKeys:
+            #print("resp data from global: ",key,':',ics213FormData[key])
+        #    if key == "rp":
+        #        self.respIcs213FormData[key] = ics213FormData[key]
+
             if key == "s2":
-                respIcs213FormData[key] = ics213FormData[key]
-                master.entryName.set(respIcs213FormData[key])
+        #        respIcs213FormData[key] = ics213FormData[key]
+                master.entryName.set(self.respIcs213FormData[key])
             elif key == "p4":
-                respIcs213FormData[key] = ics213FormData[key]
-                master.entryNamePos.set(respIcs213FormData[key])
+        #        respIcs213FormData[key] = ics213FormData[key]
+                master.entryNamePos.set(self.respIcs213FormData[key])
             elif key == "d2":
-                respIcs213FormData[key] = ics213FormData[key]
-                master.rplyDateData.set(respIcs213FormData[key])
+        #        respIcs213FormData[key] = ics213FormData[key]
+                master.rplyDateData.set(self.respIcs213FormData[key])
             elif key == "t2":
-                respIcs213FormData[key] = ics213FormData[key]
-                master.rplyTimeData.set(respIcs213FormData[key])
+        #        respIcs213FormData[key] = ics213FormData[key]
+                master.rplyTimeData.set(self.respIcs213FormData[key])
             elif key == "file":
                 respIcs213FormData[key] = ics213FormData[key]
 
@@ -663,9 +677,9 @@ class Tab3_Frame2(Frame):
             if selRespAction == "Save File":
                 saveRespData()
                 self.chooseRespFile.set('')
-            elif selRespAction == "Clear Form":
-                clearRespData()
-                self.chooseRespFile.set('')
+            #elif selRespAction == "Clear Form":
+            #    clearRespData()
+            #    self.chooseRespFile.set('')
             elif selRespAction == "Update":
                 updateRespData()
                 self.chooseRespFile.set('')
@@ -691,7 +705,7 @@ class Tab3_Frame2(Frame):
 
         self.chooseRespFile = ttk.Combobox(self, width=master.colWidth, textvariable=self.fileDropDown)
         self.widgets.append(self.chooseRespFile)
-        self.chooseRespFile['values'] = ["Save File", "Clear Form", "Update"]
+        self.chooseRespFile['values'] = ["Save File", "Update"]
         self.chooseRespFile.grid(column=3, row=0, sticky="w",padx=80)
         ## callbacks must be declared before the combobox widget
         self.chooseRespFile.bind('<<ComboboxSelected>>', selectRespFileOption)
@@ -752,7 +766,8 @@ class Tab3_Frame2(Frame):
         self.replyEntryName = Entry(self, textvariable=master.entryName, width=normText, bg="#f8e8e8")
         self.widgets.append(self.replyEntryName)
         self.replyEntryName.grid(column=1, row=respRow, sticky="w")
-        master.entryName.set(respIcs213FormData["s2"])
+        #print("s2 in respond:",ics213FormData["s2"])
+        master.entryName.set(self.respIcs213FormData["s2"])
 
         ## Position of responder
         self.replyNamePosLabel = Label(self, text=self.rplyFieldsText["p4"])
@@ -762,7 +777,7 @@ class Tab3_Frame2(Frame):
         self.replyNamePosEntry = Entry(self, textvariable=master.entryNamePos, width=normText, bg="#f8e8e8")
         self.widgets.append(self.replyNamePosEntry)
         self.replyNamePosEntry.grid(column=3, row=respRow, sticky="w")
-        master.entryNamePos.set(respIcs213FormData["p4"])
+        master.entryNamePos.set(self.respIcs213FormData["p4"])
 
         def clearForm(frame_class):
                 ## Save any altered data
@@ -866,7 +881,7 @@ class Tab3_Frame2(Frame):
                     master.entrySubj.set(ics213FormData[key])
                 elif key == "mg":
                     ics213FormData[key] = ""
-                    self.origEntryMsg.delete("1.0","end")
+                    #master.origMsg.delete("1.0","end")
                     master.origMsg.set(ics213FormData[key])
                 elif key == "s1":
                     ics213FormData[key] = ""

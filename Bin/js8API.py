@@ -72,7 +72,7 @@ def getInbox():
                     search = re.search(', ', message)
                     end = search.start()-1
                 ## extract callsign
-                    msgDict["fm"] = message[:end]
+                    msgDict["from"] = message[:end]
                 ## lop off callsign
                     message = message[end:]
                     search = re.search('TEXT', message)
@@ -90,14 +90,14 @@ def getInbox():
                 ## At this point, pass the message "As Is"
                 ## The display function will need the 'EMCOMMG='
                 ## to differenciate what sort of message is displayed
-                    msgDict["mg"] = textMsg
+                    msgDict["mesg"] = textMsg
 
                 ## prune the 'TEXT' message and start another search for 'TEXT'
                     message = message[end:]
                     search = re.search('\"_ID\"\: \"', message)
                     end = search.end()
                     message = message[end:]
-                    msgDict["id"] = message[:12]
+                    msgDict["iden"] = message[:12]
                     msgList.append(msgDict)
                     msgDict = {}
     ## use the generated error to stop the loop
@@ -112,6 +112,19 @@ def sendToInbox(callsign, textMsg):
     JS8command = gv.inboxStoreMessage
     ## encode and wrap the message
     msgData = ut.wrapMsg(ut.encodeMessage(textMsg))
+    ## JS8call only uses uppercase text
+    ## Note the structure of the parameter dictionary below
+    params = {'params':{"CMD":"MSG","CALLSIGN":callsign.upper(),"TEXT":msgData}}
+    results = api(tuple([JS8command,"",params]))
+    if results is not None:
+        return results
+    else:
+        return None
+
+def sendTextAreaToInbox(callsign, textMsg):
+    JS8command = gv.inboxStoreMessage
+    ## encode and wrap the message
+    msgData = textMsg
     ## JS8call only uses uppercase text
     ## Note the structure of the parameter dictionary below
     params = {'params':{"CMD":"MSG","CALLSIGN":callsign.upper(),"TEXT":msgData}}
@@ -136,11 +149,36 @@ def sendLive(callsign,textMsg):
         else:
             return None
 
+def sendLiveText(callsign,textMsg):
+    JS8command = gv.rxGetSelectedCall
+    result = api(tuple([JS8command,"", {}]))
+    selCall = result[1]
+    if selCall != callsign:
+        mb.showinfo("ERROR!","Callsign does not match the selected callsign in JS8call. Please select the target callsign in JS8call.")
+    else:
+        JS8command = gv.txSendMessage
+        ## Send unencoded text from Text area
+        msgData = textMsg.upper()
+        results = api(tuple([JS8command,msgData,{}]))
+        if results is not None:
+            return results[2]
+        else:
+            return None
+
 def getStationCallsign():
     JS8command = gv.getStationID
     result = api(tuple([JS8command,"", {}]))
     if result is not None:
         station = result[1]
         return station
+    else:
+        return None
+
+def getRxText():
+    JS8command = gv.rxGetText
+    result = api(tuple([JS8command,"", {}]))
+    if result is not None:
+        rxPanel = result[1]
+        return rxPanel
     else:
         return None
