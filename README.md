@@ -25,5 +25,5 @@ Quick Guide for first time installation in Windows 10:<br>
   Download the <b>JS8msg.exe</b> file from  https://github.com/tkocou/JS8msg
   Copy the <b>JS8msg.exe file</b> to your home directory and execute it. The program will build the <b>"Doc, Config, Local, Messages, HtmlTemplates and Tmp"</b> directories and the needed files before starting the main program.
   Since the configuration file has not been created yet, just click on "Cancel" and then the Quit button. Afterwards, just click on the desktop icon to start JS8msg.
-<br><br>
+<br><br>13 Nov 2021<br>
 In addition to adding support for encoding/decoding native japanese, I have added more functionality to the message handling area of JS8msg. Plus the GUI was tweaked for a better presentation.
